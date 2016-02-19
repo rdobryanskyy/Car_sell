@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+{% block head_title %}Welcome | {{ block.super }}{% endblock %} 
+
+<style>
+{% block style %}
+
+.navbar-static-top {
+	margin-bottom: 0px !important;
+}
+.jumbotron {
+	background-color: #0E3D14;
+	color: #FFF;
+}
+
+{% endblock %}
+
+
+</style>
+
+
+{% block jumbotron %}
+<div class="jumbotron">
+    <div class="container">
+        <div class='row'>
+            <div class='col-xs-6'>
+                <h1>{{ user }} Try Ddango 1.8</h1>
+                <p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
+                <p>To see the difference between static and fixed top navbars, just scroll.</p>
+                <p>
+                <a class="btn btn-lg btn-primary" href="" role="button">Join Us &raquo;</a>
+                </p>
+            </div>
+
+            <div class='col-xs-6'>
+            	<iframe src="https://player.vimeo.com/video/137899427" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="https://vimeo.com/137899427">Nadia&#039;s Early Morning</a> from <a href="https://vimeo.com/user43429034">Harry</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+    <h1>You are logged in!</h1>
+    {% if queryset %}
+        <h2>Welcome staff!</h2>
+        <table class="table">
+        {% for instance in queryset %}
+            <tr><td>{{ forloop.counter }}</td><td>{{ instance }}</td> <td>{{ instance.full_name }} </td> <td>{{ instance.timestamp|timesince }} </td></tr>
+        {% endfor %}
+        </table>
+
+    {% endif %}
+
+    {% else %}
+
+
+<div class="row">
+    <div class="col-sm-3 pull-right">
+
+        <p class='lead text-align-center'>{{ title }}</p>
+
+        <form method='POST' action=''>{% csrf_token %}
+            {{ form|crispy }}
+
+            <input class='btn btn-primary' type='submit' value='Sign Up' />
+
+        </form>
+    </div>
+
+    <div class='col-sm-3'>
+        <p class='lead text-align-center'>Django + Bootstrap</p>
+        <img src='{% static "img/marketing1.jpg" %}' class='img-responsive' />
+    </div>
+
+    <div class='col-sm-3'>
+        <p class='lead text-align-center'>Created for Starters
+            <br/>
+            <span class='fa-stack fa-lg fa-5x'>
+                <i class='fa fa-comment-o fa-stack-2x'></i>
+                <i style='color:yellow;' class="fa fa-bolt fa-stack-1x"></i>
+            </span>
+        </p>
+
+    </div>
+
+    <div class='col-sm-3'>
+        <p class='lead text-align-center'>Always Open Source <br/><br/>
+            <span class="fa-stack fa-lg fa-5x">
+                <i class="fa fa-circle-o-notch fa-stack-2x "></i>
+                <!-- <i class="fa fa-square-o fa-stack-2x"></i> -->
+                <i class="fa fa-github fa-stack-1x"></i>
+            </span>
+        </p>
+
+
+    </div>
+</div>
+
+{% endif %}
+
+{% endblock content %}
